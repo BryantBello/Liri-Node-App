@@ -26,7 +26,7 @@ switch (params[0]) {
         }
         break;
     case "do-what-it-says":
-        justDoIt(params[1]);
+        readFillCall(params[1]);
         break;
 
 
