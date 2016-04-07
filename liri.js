@@ -57,7 +57,22 @@ function myTweets() {
 
 //SPOTIFY FUNCTION
 
+function spotifyIt() {
+    spotify.search({ type: 'track', query: params[1] }, function(err, data) {
+        if (err) {
+            console.log('Error occurred: ' + err);
+            return; //from spotify npm docs
+        } else {
+            var songInfo = data.tracks.items[0];
+            console.log("the artist is", songInfo.artists[0].name);
+            console.log("the song name is", songInfo.name);
+            console.log("the album is called", songInfo.album.name);
+            console.log("here is a preview link", songInfo.preview_url);
 
+        };
+    });
+}
+spotifyIt();
 
 
 //MOVIE FUNCTION
