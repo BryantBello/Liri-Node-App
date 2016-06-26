@@ -15,18 +15,10 @@ switch (params[0]) {
         myTweets(); //CALLING TWEET FUNCTION BELOW
         break;
     case "spotify-this-song":
-        if (params[1]) {
-            spotifyIt();
-        } else {
-            spotifyIt(params[1] = "Whats my age again");
-        }
+        spotifyIt();
         break;
     case "movie-this":
-        if (params[1]) {
-            findMovie();
-        } else {
-            findMovie(params[1] = "Mr. Nobody");
-        }
+        findMovie();
         break;
     case "do-what-it-says":
         readFillCall(params[1]);
@@ -56,12 +48,17 @@ function myTweets() {
         };
     });
 }
-
+myTweets();
 
 //SPOTIFY FUNCTION
 
 function spotifyIt() {
     spotify.search({ type: 'track', query: params[1] }, function(err, data) {
+
+
+
+
+
         if (err) {
             console.log('Error occurred: ' + err);
             return; //from spotify npm docs
@@ -75,30 +72,41 @@ function spotifyIt() {
         };
     });
 }
-spotifyIt();
 
+spotifyIt();
 
 //MOVIE FUNCTION
 function findMovie() {
-  request("http://www.omdbapi.com/?t=" + params[1] + "&y=&plot=short&r=json", function(error, response, body){
-    var movieObject = JSON.parse(body);
-    console.log("the title is", movieObject.Title);
-    console.log("the year is", movieObject.Year);
-    console.log("the IMDB Rating is", movieObject.imdbRating);
-    console.log("the country is", movieObject.Country);
-    console.log("the language is", movieObject.Language);
-    console.log("the plot is", movieObject.Plot);
-    console.log("the actors are", movieObject.Actors);
-  });
+    request("http://www.omdbapi.com/?t=" + params[1] + "&y=&plot=short&r=json", function(error, response, body) {
+       
+        if (params[1]) {
+            findMovie();
+        } else {
+            findMovie(params[1] = "Mr. Nobody");
+        }
+
+
+
+
+
+        var movieObject = JSON.parse(body);
+        console.log("the title is ", movieObject.Title);
+        console.log("the year is ", movieObject.Year);
+        console.log("the IMDB Rating is ", movieObject.imdbRating);
+        console.log("the country is ", movieObject.Country);
+        console.log("the language is ", movieObject.Language);
+        console.log("the plot is ", movieObject.Plot);
+        console.log("the actors are ", movieObject.Actors);
+    });
 };
 
-
+findMovie();
 
 
 //RANDOM FUNCTION
 function readFillCall() {
-  fs.readFile("random.txt", "utf-8", function(err, data){
-    data.split(',');
-    spotifyIt(data[1]);
-  });
+    fs.readFile("random.txt", "utf-8", function(err, data) {
+        var x = data.split(',');
+        spotifyIt(x[1]);
+    });
 };
